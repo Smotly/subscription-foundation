@@ -78,10 +78,11 @@ async function createStorefrontCart(cart) {
 
     var json = await response.json();
 
+
     if (response.status == 200) {
       response = {
         cart_id: json.id,
-        item_id: json.lineItems.physicalItems[0].id
+        item_id: json.lineItems.digitalItems[0].id
       }
     } else {
       // get exisiting cart id from string
@@ -186,6 +187,9 @@ function bindElements() {
         list_price: list_price,
         name: 'Subscription:' + product_name + ' :' + $selected_sub_option.value,
       });
+
+        console.log("SMOTLY - storefront_cart : ", storefront_cart);
+        console.log("SMOTLY - new_cart : ", new_cart);
 
       if (typeof (cart.id) === 'undefined') {
         // Create storefront mock cart to get cart id

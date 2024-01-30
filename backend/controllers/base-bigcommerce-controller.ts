@@ -89,16 +89,30 @@ export abstract class BaseBigCommerceController extends AuthApiController {
     setCookieOnBackend(res, "store_id", this.store.id);
 
     // If store already has a channel with the same name, skip channel creation
+    console.log("CHANNEL FOUND : ", channelFound)
     if (channelFound) {
       if (reset || !["connected", "active"].includes(channelFound.status)) {
         await this.bigApi.channels.update(channelFound.id, {
-          is_visible: false,
-          is_listable_from_ui: false,
-          is_enabled: false,
-          config_meta: {
-            app: {
-              id: BC_APP_ID,
-              sections: null
+          "is_visible": true,
+          "is_listable_from_ui": true,
+          "is_enabled": true,
+          "config_meta": {
+            "app": {
+              "id": BC_APP_ID,
+              "sections": [
+                {
+                  "title": "Products",
+                  "query_path": "products"
+                },
+                {
+                  "title": "Settings",
+                  "query_path": "settings"
+                },
+                {
+                  "title": "Support",
+                  "query_path": "support"
+                }
+              ]
             }
           }
         });
