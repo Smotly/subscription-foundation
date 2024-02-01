@@ -188,9 +188,6 @@ function bindElements() {
         name: 'Subscription:' + product_name + ' :' + $selected_sub_option.value,
       });
 
-        console.log("SMOTLY - storefront_cart : ", storefront_cart);
-        console.log("SMOTLY - new_cart : ", new_cart);
-
       if (typeof (cart.id) === 'undefined') {
         // Create storefront mock cart to get cart id
         storefront_cart = await createStorefrontCart(storefront_cart);
