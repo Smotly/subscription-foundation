@@ -71,6 +71,12 @@ export class StripeService {
     });
   }
 
+  public async createSetupIntents(
+      params: Stripe.SetupIntentCreateParams
+  ): Promise<Stripe.Response<Stripe.SetupIntent>> {
+    return await this.stripe.setupIntents.create(params);
+  }
+
   public async createPaymentMethod(
     params: Stripe.PaymentMethodCreateParams
   ): Promise<Stripe.Response<Stripe.PaymentMethod>> {
@@ -78,9 +84,29 @@ export class StripeService {
       idempotencyKey: uuidv4()
     });
   }
+  public async attachPaymentMethod(
+      id:string,
+      params: Stripe.PaymentMethodAttachParams
+  ): Promise<Stripe.Response<Stripe.PaymentMethod>>{
+    return await this.stripe.paymentMethods.attach(id, params);
+  }
+
+  public async updateCustomerDefaultPaymentMethod(
+      id:string,
+      params: Stripe.CustomerUpdateParams
+  ): Promise<Stripe.Response<Stripe.Customer>>{
+    return await this.stripe.customers.update(id, params);
+  }
 
   public async getPaymentIntent(id: string) {
     return await this.stripe.paymentIntents.retrieve(id);
+  }
+
+  public async confirmPaymentIntent(
+      id:string,
+      params: Stripe.PaymentIntentConfirmParams
+  ): Promise<Stripe.Response<Stripe.PaymentIntent>> {
+    return await this.stripe.paymentIntents.confirm(id, params);
   }
 
   /**
