@@ -122,12 +122,12 @@ export class WebhooksController extends BaseBigCommerceController {
         : "";
 
     //creation d'un setup Intent
-    /*
-    const setupIntent = await this.stripeService.createSetupIntents(
+
+/*    const setupIntent = await this.stripeService.createSetupIntents(
         {
           confirm: true,
           customer:stripe_customer_id,
-          payment_method_types: ['sepa_debit'],
+          //payment_method_types: ['sepa_debit'],
           payment_method: customer_payment_id
         }
     )
@@ -135,9 +135,9 @@ export class WebhooksController extends BaseBigCommerceController {
     console.log(
         "Stripe Setup Intent :: setupIntent :: ",
         setupIntent
-    );
-    */
+    );*/
 
+/*
         const payment_intent_confirm = await this.stripeService.confirmPaymentIntent(
         order.payment_provider_id,
         {
@@ -178,15 +178,17 @@ export class WebhooksController extends BaseBigCommerceController {
         "Stripe updateCustomerDefaultPaymentMethod Response :: customer :: ",
         updateCustomerDefaultPaymentMethod
     );
+*/
+//
 
     const subscription = await this.stripeService.createSubscription({
       customer: stripe_customer_id,
       items: subscription_items,
       default_payment_method: customer_payment_id,
       payment_behavior: 'default_incomplete',
-      off_session:true,
+      //off_session:true,
       payment_settings: {
-        save_default_payment_method: 'on_subscription'
+        save_default_payment_method: 'on_subscription',
       },
       metadata: {
         bc_order_id: order_id
@@ -236,6 +238,8 @@ export class WebhooksController extends BaseBigCommerceController {
       "BigCommerce Webhook :: Order Created :: Upsert Customer Attribute Value for Stripe Customer ID :: ",
       customer_id_response
     );
+
+
 
     res.status(HttpStatus.OK).send("ok");
   }
