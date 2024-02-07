@@ -220,7 +220,7 @@ function buildWidget(config) {
   // If onetime purchase is false, disable the add to cart button so it's a subscription only product 
   if (!subWidgetConfig.onetime_purchase) {
     document.getElementById('form-action-addToCart').disabled = true;
-    document.getElementsByClassName('productView-price')[0].append('This is a subscription only product.');
+    document.getElementsByClassName('productView-price')[0].append('Produit par abonnement uniquement.');
   }
 
   // Build widget options
@@ -237,7 +237,7 @@ function buildWidget(config) {
         <label for='sub_con${option.id}'>
           ${option.frequency > 1 ? 
             `Every ${option.frequency} ${option.type}s - Save ${option.discount}${option.unit}!` :
-            `Every ${option.type} - Save ${option.discount}${option.unit}!`}
+            `Abonnement de test`}
         </label><br />
       </div>`
   }, '');

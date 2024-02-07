@@ -185,11 +185,6 @@ export class WebhooksController extends BaseBigCommerceController {
       customer: stripe_customer_id,
       items: subscription_items,
       default_payment_method: customer_payment_id,
-      payment_behavior: 'default_incomplete',
-      //off_session:true,
-      payment_settings: {
-        save_default_payment_method: 'on_subscription',
-      },
       metadata: {
         bc_order_id: order_id
       }
