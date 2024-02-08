@@ -64,11 +64,11 @@ export class StripeCustomerPortalController extends BaseStripeController {
         subscription_update: {
           enabled:true,
           default_allowed_updates: ["quantity"],
-          proration_behavior: "none",
+          proration_behavior: "create_prorations",
           products: [
               {
-            product: 'prod_PVnk6eJ0m0ZdpI',
-            prices: ['price_1Ogm97FkeWfrK4Qgrw33u12h']
+            product: 'prod_PWY2FAlrpCoqaj',
+            prices: ['price_1OhUwoFkeWfrK4QgWLHG1GUl']
             }
           ]
         }
