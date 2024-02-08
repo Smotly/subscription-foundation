@@ -25,7 +25,21 @@ export class StripeCustomerPortalController extends BaseStripeController {
     _req?: NextApiRequest,
     res?: NextApiResponse
   ): Promise<NextApiResponse | void> {
-    const config: Stripe.BillingPortal.ConfigurationCreateParams = {
+    const config: {
+      features: {
+        subscription_cancel: { mode: string; proration_behavior: string; enabled: boolean };
+        invoice_history: { enabled: boolean };
+        payment_method_update: { enabled: boolean };
+        customer_update: { enabled: boolean; allowed_updates: string[] };
+        subscription_update: {
+          default_allowed_updates: any[];
+          proration_behavior: string;
+          enabled: boolean;
+          products: { product: string; prices: string[] }[]
+        }
+      };
+      business_profile: { privacy_policy_url: string; headline: string; terms_of_service_url: string }
+    } = {
       business_profile: {
         headline: CUSTOMER_PORTAL_HEADLINE,
         privacy_policy_url: this.store.url + "/privacy",
@@ -33,7 +47,7 @@ export class StripeCustomerPortalController extends BaseStripeController {
       },
       features: {
         customer_update: {
-          allowed_updates: ["email", "tax_id"],
+          allowed_updates: ["tax_id"],
           enabled: true
         },
         invoice_history: {
@@ -44,8 +58,19 @@ export class StripeCustomerPortalController extends BaseStripeController {
         },
         subscription_cancel: {
           enabled: true,
-          mode: "immediately",
+          mode: "at_period_end",
           proration_behavior: "none"
+        },
+        subscription_update: {
+          enabled:true,
+          default_allowed_updates: ["quantity"],
+          proration_behavior: "none",
+          products: [
+              {
+            product: 'prod_PVnk6eJ0m0ZdpI',
+            prices: ['price_1Ogm97FkeWfrK4Qgrw33u12h']
+            }
+          ]
         }
       }
     };
