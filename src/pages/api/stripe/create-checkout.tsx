@@ -8,7 +8,7 @@ export default async function handler(req, res) {
             const stripe = new Stripe("sk_test_51OZy8jFkeWfrK4QgLl1oeRGQ5O5gPdMsG3yc6e7IPOEoyfwElnZ1zCU3ccN5jBhsdlMtVthymgWdXicn2V2LvAGD00x5QjajKs",null);
             const session = await stripe.checkout.sessions.create({
                 payment_method_types: ['card', 'sepa_debit'],
-                customer: 'cus_PY2F1lLT82CrRz',
+                customer: 'cus_PZFsaSwXdyBJ5z',
                 line_items: [{
                     price: 'price_1Oiw0UFkeWfrK4QgXtZmHnx5', // Remplacez par l'ID de votre plan
                     quantity: 1,
