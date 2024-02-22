@@ -6,13 +6,23 @@ export default async function handler(req, res) {
         try {
             console.log("creation de la session checkout");
             const stripe = new Stripe("sk_test_51OZy8jFkeWfrK4QgLl1oeRGQ5O5gPdMsG3yc6e7IPOEoyfwElnZ1zCU3ccN5jBhsdlMtVthymgWdXicn2V2LvAGD00x5QjajKs",null);
+            const bigcommerce_email = req.body.bigcommerce_email ? req.body.bigcommerce_email : null;
+            const products = req.body.products ? JSON.parse(req.body.products) : null;
+            const customer_stripe = req.body.customer_stripe ? req.body.customer_stripe :
+                await stripe.customers.create( {
+                    email:bigcommerce_email
+                }).then(response => {
+                    return response.id
+                })
+            console.log("DATA pour creation checkout : ", bigcommerce_email, products, customer_stripe)
             const session = await stripe.checkout.sessions.create({
                 payment_method_types: ['card', 'sepa_debit'],
-                customer: 'cus_PZFsaSwXdyBJ5z',
-                line_items: [{
-                    price: 'price_1Oiw0UFkeWfrK4QgXtZmHnx5', // Remplacez par l'ID de votre plan
-                    quantity: 1,
-                }],
+                customer: customer_stripe,
+                //line_items: products,
+                line_items:[
+                    {price:"price_1OlXqBFkeWfrK4Qg2vNBVrj1",
+                    quantity:10}
+                ],
                 mode: 'subscription',
                 success_url: `${req.headers.origin}/confirmation-abonnement?session_id={CHECKOUT_SESSION_ID}`,
                 cancel_url: `${req.headers.origin}/cart.php`,

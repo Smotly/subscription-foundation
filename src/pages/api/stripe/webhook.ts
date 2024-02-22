@@ -55,6 +55,7 @@ const webhookHandler = async (req, res) => {
         const subscription_id = session.subscription
         const customer_id = session.customer
         const email = session.customer_details.email
+        /** TODO redescendre la commandre dans BC */
         /*const sessionBillingAddress = {
             first_name: session.customer_details.name.split(" ")[0],
             last_name: session.customer_details.name.split(" ")[1],
