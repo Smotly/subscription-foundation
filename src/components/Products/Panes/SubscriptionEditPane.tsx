@@ -117,7 +117,7 @@ export default function SubscriptionEditPane(): JSX.Element {
   ): Promise<SubscriptionOptionPayload[]> => {
     const options = variant.sub_config.options;
     const price_request: Stripe.PriceCreateParams = {
-      currency: "usd",
+      currency: "eur",
       product: stripe_product_id,
       recurring: {
         interval: "month",
