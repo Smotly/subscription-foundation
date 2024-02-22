@@ -120,6 +120,67 @@ export class WebhooksController extends BaseBigCommerceController {
       typeof payment_intent.payment_method === "string"
         ? payment_intent.payment_method
         : "";
+
+    //creation d'un setup Intent
+
+/*    const setupIntent = await this.stripeService.createSetupIntents(
+        {
+          confirm: true,
+          customer:stripe_customer_id,
+          //payment_method_types: ['sepa_debit'],
+          payment_method: customer_payment_id
+        }
+    )
+
+    console.log(
+        "Stripe Setup Intent :: setupIntent :: ",
+        setupIntent
+    );*/
+
+/*
+        const payment_intent_confirm = await this.stripeService.confirmPaymentIntent(
+        order.payment_provider_id,
+        {
+          off_session:true
+        }
+    );
+
+    console.log(
+        "Stripe Payment Intent confirm :: PaymentIntent :: ",
+        payment_intent_confirm
+    );
+
+  //pour attacher la methode de paiement au client
+  const payment_attachement = await this.stripeService.attachPaymentMethod(customer_payment_id,
+        {
+          customer: stripe_customer_id
+        }
+    )
+
+    console.log(
+        "Stripe Payment attachement Response :: customer :: ",
+        payment_attachement
+    );
+
+    console.log(
+        "customer_payment_id THOMAS : ",
+        customer_payment_id
+    );
+    const updateCustomerDefaultPaymentMethod = await this.stripeService.updateCustomerDefaultPaymentMethod(stripe_customer_id,
+        {
+          invoice_settings: {
+            default_payment_method: customer_payment_id,
+          },
+        }
+    )
+
+    console.log(
+        "Stripe updateCustomerDefaultPaymentMethod Response :: customer :: ",
+        updateCustomerDefaultPaymentMethod
+    );
+*/
+//
+
     const subscription = await this.stripeService.createSubscription({
       customer: stripe_customer_id,
       items: subscription_items,
@@ -172,6 +233,8 @@ export class WebhooksController extends BaseBigCommerceController {
       "BigCommerce Webhook :: Order Created :: Upsert Customer Attribute Value for Stripe Customer ID :: ",
       customer_id_response
     );
+
+
 
     res.status(HttpStatus.OK).send("ok");
   }

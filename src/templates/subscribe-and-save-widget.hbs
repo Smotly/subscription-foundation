@@ -78,10 +78,11 @@ async function createStorefrontCart(cart) {
 
     var json = await response.json();
 
+
     if (response.status == 200) {
       response = {
         cart_id: json.id,
-        item_id: json.lineItems.physicalItems[0].id
+        item_id: json.lineItems.digitalItems[0].id
       }
     } else {
       // get exisiting cart id from string
@@ -201,7 +202,7 @@ function bindElements() {
       }
 
       if (typeof (cartItemResponse.data) !== 'undefined') {
-        window.location.href = '/checkout';
+        window.location.href = '/cart.php';
       } else {
         console.error('Error occurred adding subscription to the cart :: ', cartItemResponse);
       }
@@ -219,7 +220,7 @@ function buildWidget(config) {
   // If onetime purchase is false, disable the add to cart button so it's a subscription only product 
   if (!subWidgetConfig.onetime_purchase) {
     document.getElementById('form-action-addToCart').disabled = true;
-    document.getElementsByClassName('productView-price')[0].append('This is a subscription only product.');
+    document.getElementsByClassName('productView-price')[0].append('Produit par abonnement uniquement.');
   }
 
   // Build widget options
@@ -236,7 +237,7 @@ function buildWidget(config) {
         <label for='sub_con${option.id}'>
           ${option.frequency > 1 ? 
             `Every ${option.frequency} ${option.type}s - Save ${option.discount}${option.unit}!` :
-            `Every ${option.type} - Save ${option.discount}${option.unit}!`}
+            `Abonnement de test`}
         </label><br />
       </div>`
   }, '');

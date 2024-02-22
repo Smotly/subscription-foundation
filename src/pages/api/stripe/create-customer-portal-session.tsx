@@ -13,6 +13,9 @@ import {
   BC_APP_CALLBACK_URL
 } from "@/shared/constants/bigcommerce";
 import { CUSTOMER_PORTAL_HEADLINE } from "@/constants/stripe";
+import process from "process";
+import axios from "axios";
+import console from "console";
 
 @injectable()
 export class StripeCustomerPortalController extends BaseStripeController {
@@ -25,7 +28,7 @@ export class StripeCustomerPortalController extends BaseStripeController {
     _req?: NextApiRequest,
     res?: NextApiResponse
   ): Promise<NextApiResponse | void> {
-    const config: Stripe.BillingPortal.ConfigurationCreateParams = {
+    const config = {
       business_profile: {
         headline: CUSTOMER_PORTAL_HEADLINE,
         privacy_policy_url: this.store.url + "/privacy",
@@ -33,8 +36,7 @@ export class StripeCustomerPortalController extends BaseStripeController {
       },
       features: {
         customer_update: {
-          allowed_updates: ["email", "tax_id"],
-          enabled: true
+          enabled: false
         },
         invoice_history: {
           enabled: true
@@ -44,8 +46,17 @@ export class StripeCustomerPortalController extends BaseStripeController {
         },
         subscription_cancel: {
           enabled: true,
-          mode: "immediately",
-          proration_behavior: "none"
+        },
+        subscription_update: {
+          enabled:true,
+          default_allowed_updates: ['quantity'],
+          proration_behavior: 'create_prorations',
+          products : [
+            {
+              product:"prod_PajDv0b0C4FOb6",
+              prices:["price_1OlXqBFkeWfrK4Qg2vNBVrj1"]
+            }
+          ]
         }
       }
     };
@@ -92,7 +103,7 @@ export class StripeCustomerPortalController extends BaseStripeController {
       this.response =
         await this.stripeService.stripe.billingPortal.sessions.create({
           customer: stripe_id,
-          return_url: this.store.url + "/account.php",
+          return_url: this.store.url + "/",
           configuration: configuration.id
         });
 

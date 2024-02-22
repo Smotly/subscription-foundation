@@ -18,27 +18,27 @@ export class ChannelController extends BaseBigCommerceController {
     res?: NextApiResponse
   ): Promise<NextApiResponse | void> {
     this.channel = await this.bigApi.channels.upsert({
-      name: SUBSCRIPTION_CHANNEL_NAME,
-      status: "connected",
-      is_listable_from_ui: true,
-      type: "marketing",
-      platform: "custom",
-      is_visible: true,
-      config_meta: {
-        app: {
-          id: BC_APP_ID,
-          sections: [
+      "name": SUBSCRIPTION_CHANNEL_NAME,
+      "status": "connected",
+      "is_listable_from_ui": true,
+      "type": "marketing",
+      "platform": "custom",
+      "is_visible": true,
+      "config_meta": {
+        "app": {
+          "id": BC_APP_ID,
+          "sections": [
             {
-              title: "Products",
-              query_path: "products"
+              "title": "Products",
+              "query_path": "products"
             },
             {
-              title: "Settings",
-              query_path: "settings"
+              "title": "Settings",
+              "query_path": "settings"
             },
             {
-              title: "Support",
-              query_path: "support"
+              "title": "Support",
+              "query_path": "support"
             }
           ]
         }
